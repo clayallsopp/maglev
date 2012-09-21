@@ -145,6 +145,7 @@ module Maglev
   end
 
   module RelationshipsInstance
+    # Used as a semaphore-esque structure.
     def block_in(&block)
       block_updates
       block.call
