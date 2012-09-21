@@ -14,6 +14,8 @@ module Maglev
           url += query.map { |k,v| "#{k}=#{v}"}.join('&')
         end
 
+        url = complete_url(url)
+
         BubbleWrap::HTTP.send(method, complete_url(url), _options) do |response|
           if response.ok?
             json = BubbleWrap::JSON.parse(response.body.to_str)
