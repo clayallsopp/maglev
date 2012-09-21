@@ -1,0 +1,21 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    bubble-wrap (1.1.3)
+    formotion (1.1)
+      bubble-wrap (>= 1.1.2)
+    motion_support (0.0.7)
+      bubble-wrap
+    remote_model (0.0.4)
+      bubble-wrap
+    routable (0.0.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bubble-wrap
+  formotion
+  motion_support
+  remote_model (>= 0.0.4)
+  routable
