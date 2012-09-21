@@ -17,6 +17,10 @@ module Maglev
         end
       end
 
+      def setup(&block)
+        instance_eval &block
+      end
+
       def default_url_options(value = -1, &block)
         return @default_url_options if value == -1 and block.nil?
 
@@ -31,8 +35,22 @@ module Maglev
         self.default_url_options
       end
 
-      def setup(&block)
-        instance_eval &block
+      def default_query=(value)
+        self.default_url_options[:query] = value
+      end
+
+      def default_query(value = -1, &block)
+        return self.default_url_options[:query] if value == -1 and block.nil?
+
+        if block
+          o = Maglev::Support::DslWriter.new
+          o.instance_eval &block
+          self.default_query = o.hash
+        elsif value != -1
+          self.default_query = value
+        end
+
+        self.default_url_options[:query]
       end
 
       def complete_url(fragment)
