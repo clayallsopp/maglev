@@ -3,6 +3,7 @@ module Maglev
     class << self
       include Maglev::Attributes
       include Maglev::Relationships
+      include Maglev::ModelUrls
 
       if !Maglev.force_remote_relationship_syntax
         alias_method :has_many, :remote_has_many
@@ -29,6 +30,7 @@ module Maglev
 
     include Maglev::Hashable
     include Maglev::RelationshipsInstance
+    include Maglev::ModelUrlsInstance
 
     [:remote_has_many, :remote_has_one, :remote_belongs_to].each do |relationship|
       self.send(:define_method, relationship.to_s) do

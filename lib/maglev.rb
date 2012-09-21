@@ -1,6 +1,6 @@
 require "maglev/version"
 require 'bubble-wrap/core'
-require 'remote_model'
+require 'motion_support/all'
 require 'formotion'
 
 BW.require File.expand_path('../maglev/**/*.rb', __FILE__) do

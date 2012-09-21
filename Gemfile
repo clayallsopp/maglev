@@ -5,8 +5,6 @@ source "https://rubygems.org"
 
 gem "formotion"
 
-gem "remote_model", ">=0.0.4"
-
 gem "routable"
 
 gem "bubble-wrap"
