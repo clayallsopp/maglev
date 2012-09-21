@@ -1,0 +1,25 @@
+$:.unshift("/Library/RubyMotion/lib")
+require 'motion/project'
+require 'rubygems'
+require 'bundler'
+Bundler.require :default
+
+require 'motion-cocoapods'
+require 'bubble-wrap/core'
+
+$:.unshift("../../lib/")
+require '../../lib/maglev'
+
+Motion::Project::App.setup do |app|
+  # Use `rake config' to see complete project settings.
+  app.name = 'FacebookGraph'
+  fb_app_id = "340990539314215"
+  if fb_app_id == "YOUR-APP-ID"
+    raise "You need to specify a Facebook App ID in ./Rakefile"
+  end
+  app.info_plist['CFBundleURLTypes'] = [{'CFBundleURLSchemes' => ["fb#{fb_app_id}"]}]
+
+  app.pods do
+    pod 'Facebook-iOS-SDK'
+  end
+end
