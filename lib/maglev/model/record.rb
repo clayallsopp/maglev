@@ -19,9 +19,10 @@ module Maglev
           if json.class == Array
             arr_rep = json
           elsif json.class == Hash
-            plural_sym = self.pluralize.to_sym
-            if json.has_key? plural_sym
-              arr_rep = json[plural_sym]
+            [self.inspect.pluralize.to_sym, self.collection_options[:json_path]].collect do |key_path|
+              if json.include? key_path
+                arr_rep = json[key_path]
+              end
             end
           else
             # the returned data was something else
@@ -29,7 +30,7 @@ module Maglev
             request_block_call(block, nil, response)
             return
           end
-          arr_rep.each { |one_obj_hash|
+          arr_rep && arr_rep.each { |one_obj_hash|
             objs << self.new(one_obj_hash)
           }
           request_block_call(block, objs, response)
