@@ -16,9 +16,10 @@ module Maglev
         if response.ok?
           objs = []
           arr_rep = nil
-          if json.class == Array
+          case json
+          when Array
             arr_rep = json
-          elsif json.class == Hash
+          when Hash
             [self.inspect.pluralize.to_sym, self.collection_options[:json_path]].collect do |key_path|
               if json.include? key_path
                 arr_rep = json[key_path]
