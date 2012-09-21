@@ -4,6 +4,11 @@ module Maglev
       include Maglev::Attributes
       include Maglev::Relationships
       include Maglev::ModelUrls
+      include Maglev::Record
+      include Maglev::API::HTTP
+      # So each model can have different default options or
+      # root URLs
+      include Maglev::API::Options
 
       if !Maglev.force_remote_relationship_syntax
         alias_method :has_many, :remote_has_many
@@ -31,6 +36,7 @@ module Maglev
     include Maglev::Hashable
     include Maglev::RelationshipsInstance
     include Maglev::ModelUrlsInstance
+    include Maglev::RecordInstance
 
     [:remote_has_many, :remote_has_one, :remote_belongs_to].each do |relationship|
       self.send(:define_method, relationship.to_s) do
