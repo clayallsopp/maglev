@@ -2,8 +2,9 @@ module Maglev
   module Relationships
     # OPTIONS
     # - class_name
-    # - through_path
     # - json_path
+    # - collection_path
+    # - member_path
     def remote_has_one(name = nil, options = {})
       @remote_has_one ||= {}
 
@@ -34,11 +35,9 @@ module Maglev
     end
 
     def remote_has_one?(klass)
-      has = false
-      self.remote_has_one.each do |name, hash|
-        has = true if hash[:class] == klass
+      self.remote_has_one.any? do |name, hash|
+        hash[:class] == klass
       end
-      has
     end
 
     def remote_belongs_to(name = nil, options = {})
