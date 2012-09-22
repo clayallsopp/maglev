@@ -50,4 +50,11 @@ class MoviesController < UITableViewController
 
     cell
   end
+
+  def tableView(tableView, didSelectRowAtIndexPath:indexPath)
+    tableView.deselectRowAtIndexPath(indexPath, animated:true)
+
+    movie = @movies[indexPath.row]
+    self.navigationController.pushViewController(MovieController.alloc.initWithId(movie.id), animated: true)
+  end
 end
