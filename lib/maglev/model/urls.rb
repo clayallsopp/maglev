@@ -5,11 +5,11 @@ module Maglev
         @collection_path = { path: Maglev::Support::FormatableString.new(path), options: options }
       end
 
-      @collection_path[:path]
+      @collection_path && @collection_path[:path]
     end
 
     def collection_options
-      @collection_path[:options]
+      @collection_path && @collection_path[:options]
     end
 
     def member_path(path = nil, options = {})
@@ -17,11 +17,11 @@ module Maglev
         @member_path = { path: Maglev::Support::FormatableString.new(path), options: options }
       end
 
-      @member_path[:path]
+      @member_path && @member_path[:path]
     end
 
     def member_options
-      @member_path[:options]
+      @member_path && @member_path[:options]
     end
 
     def custom_paths(options = {})
