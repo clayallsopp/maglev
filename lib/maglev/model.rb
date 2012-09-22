@@ -16,6 +16,9 @@ module Maglev
         alias_method :has_one?, :remote_has_one?
         alias_method :belongs_to, :remote_belongs_to
         alias_method :belongs_to?, :remote_belongs_to?
+
+        alias_method :find_all, :remote_find_all
+        alias_method :find, :remote_find
       end
 
       attr_accessor :models

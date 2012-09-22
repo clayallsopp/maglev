@@ -1,12 +1,5 @@
 module Maglev
   module Record
-    def self.included(base)
-      if !Maglev.force_remote_relationship_syntax
-        base.send(:alias_method, :find, :remote_find)
-        base.send(:alias_method, :find_all, :remote_find_all)
-      end
-    end
-
     def create_model(json)
       self.new(json)
     end
