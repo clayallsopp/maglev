@@ -11,10 +11,11 @@ module Maglev
       if name && name = name.to_s
         klass, _collection_path, _member_path = build_relationship("@remote_has_one", name, options)
 
+        # GETTER
         ivar = "@#{name}"
         attr_reader name
-        add_dsl_extension_attr(name, klass, _collection_path, _member_path)
 
+        # SETTER
         define_method("#{name}=") do |value|
           model_value = Maglev::Support::TransformHash.transform(value, klass)
   
@@ -48,7 +49,6 @@ module Maglev
 
         ivar = "@#{name}"
         attr_reader name
-        add_dsl_extension_attr(name, klass, _collection_path, _member_path)
 
         # EX
         # feed.user = a_user
@@ -100,8 +100,6 @@ module Maglev
 
               model_value
             }
-
-            self.class.send(:add_dsl_extension, arr, klass, _collection_path, _member_path)
 
             instance_variable_set(ivar, arr)
           end
