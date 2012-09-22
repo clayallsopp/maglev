@@ -52,6 +52,8 @@ module Maglev
       alias_method :has_many, :remote_has_many
       alias_method :has_one, :remote_has_one
       alias_method :belongs_to, :remote_belongs_to
+
+      alias_method :destroy, :remote_destroy
     end
   end
 end

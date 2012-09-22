@@ -21,7 +21,6 @@ module Maglev
         http_call(:delete, url, params, &block)
       end
 
-      private
       def http_call(method, url, call_options = {}, &block)
         _options = call_options 
         _options.merge! self.default_url_options || {}

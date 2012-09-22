@@ -1,9 +1,20 @@
 module Maglev
   module Record
-    def find(id, params = {}, &block)
+    def self.included(base)
+      if !Maglev.force_remote_relationship_syntax
+        base.send(:alias_method, :find, :remote_find)
+        base.send(:alias_method, :find_all, :remote_find_all)
+      end
+    end
+
+    def create_model(json)
+      self.new(json)
+    end
+
+    def remote_find(id, params = {}, &block)
       get(member_path.format(params.merge(id: id))) do |response, json|
         if response.ok?
-          obj = self.new(json)
+          obj = create_model(json)
           request_block_call(block, obj, response)
         else
           request_block_call(block, nil, response)
@@ -11,7 +22,7 @@ module Maglev
       end
     end
 
-    def find_all(params = {}, &block)
+    def remote_find_all(params = {}, &block)
       get(collection_path.format(params)) do |response, json|
         if response.ok?
           objs = []
@@ -32,7 +43,7 @@ module Maglev
             return
           end
           arr_rep && arr_rep.each { |one_obj_hash|
-            objs << self.new(one_obj_hash)
+            objs << create_model(one_obj_hash)
           }
           request_block_call(block, objs, response)
         else
@@ -63,7 +74,7 @@ module Maglev
     #     p "success!"
     #   end
     # end
-    def destroy(&block)
+    def remote_destroy(&block)
       delete(self.member_path) do |response, json|
         if block
           block.call response, json
