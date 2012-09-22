@@ -21,7 +21,7 @@ module Maglev
     def remote_attribute(name, options = {})
       @remote_attributes ||= []
       attr_accessor name
-      @remote_attributes << { (options[:json_path] || name.to_sym) => name }
+      @remote_attributes << [name, options]
       @remote_attributes
     end
   end
