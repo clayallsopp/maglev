@@ -104,3 +104,27 @@ Thus, our `/users` would return something like:
 ```
 
 Notice how `User#city` is a nested resource inside the JSON; you can dig through the JSON with the value-path syntax.
+
+## Support Classes
+
+The `Maglev::Support` module contains many wrappers and shortcuts that you could find useful in your project.
+
+### Transformer
+
+A wrapper for `NSValueTransformer`:
+
+```ruby
+# Creates a non-reversable NSValueTransformer
+string_to_color = Maglev::Support::Transformer.to(NSString) do |value|
+  UIColor.send("#{value.downcase}Color")
+end
+
+# Creates a reversable NSValueTransformer
+bidirectional = Maglev::Suport::Transformer.to(NSString) do |value, reversed_value|
+  if reversed_value
+    get_string_for_color(reversed_value)
+  else
+    UIColor.send("#{value.downcase}Color")
+  end
+end
+```
