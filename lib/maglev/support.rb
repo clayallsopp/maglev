@@ -19,7 +19,13 @@ module Maglev
     end
 
     def make_class(klass_str, superklass)
-      Object.const_set(klass_str, Class.new(superklass))
+      klass = Object.const_set(klass_str, Class.new(superklass))
+      klass.instance_eval do
+        def is_a?(superklass)
+          self.ancestors.include?(superklass)
+        end
+      end
+      klass
     end
   end
 end
