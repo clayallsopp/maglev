@@ -1,11 +1,19 @@
 module Maglev
   module Record
+    def delegate
+      self
+    end
+
+    def record_class
+      self
+    end
+
     def create_model(json)
-      self.new(json)
+      record_class.new(json)
     end
 
     def remote_find(id, params = {}, &block)
-      get(member_path.format(params.merge(id: id))) do |response, json|
+      get(member_path.format(params.merge(id: id), self.delegate)) do |response, json|
         if response.ok?
           obj = create_model(json)
           request_block_call(block, obj, response)
@@ -16,7 +24,8 @@ module Maglev
     end
 
     def remote_find_all(params = {}, &block)
-      get(collection_path.format(params)) do |response, json|
+      url = collection_path.format(params, self.delegate)
+      get(url) do |response, json|
         if response.ok?
           objs = []
           arr_rep = nil
@@ -24,7 +33,7 @@ module Maglev
           when Array
             arr_rep = json
           when Hash
-            [self.inspect.pluralize.to_sym, self.collection_options[:json_path]].collect do |key_path|
+            [self.record_class.inspect.pluralize.to_sym, self.collection_options[:json_path]].collect do |key_path|
               if json.include? key_path
                 arr_rep = json[key_path]
               end

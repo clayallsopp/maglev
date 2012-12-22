@@ -3,20 +3,23 @@ module Maglev
     module Support
       module_function
 
-      def attach_model_dsl(model_value, klass, _collection_path, _member_path)
+      def attach_model_dsl(model_value, klass, _collection_path, _member_path, options, delegate)
         # Attach the DSL to the model
         # i.e. user.friends.remote_find_all do
         # end
         model_value.extend(Maglev::ModelUrls)
-        model_value.collection_path(_collection_path)
-        model_value.member_path(_member_path)
+        model_value.collection_path(_collection_path, options)
+        model_value.member_path(_member_path, options)
         model_value.extend(Maglev::API::HTTP)
         model_value.define_singleton_method "http_call", -> (method, url, call_options = {}, &block) {
           klass.http_call(method, url, call_options, &block)
         }
         model_value.extend(Maglev::Record)
-        model_value.define_singleton_method "create_model" {
-          klass.create_model(json)
+        model_value.define_singleton_method "record_class" {
+          klass
+        }
+        model_value.define_singleton_method "delegate" {
+          delegate
         }
       end
     end
@@ -86,7 +89,7 @@ module Maglev
           end
           model_value = instance_variable_get(ivar)
 
-          Maglev::Relationships::Support.attach_model_dsl(model_value, klass, _collection_path, _member_path)
+          Maglev::Relationships::Support.attach_model_dsl(model_value, klass, _collection_path, _member_path, options, self)
 
           model_value
         end
@@ -111,7 +114,7 @@ module Maglev
       define_method("#{name}") do
         model_value = instance_variable_get(ivar)
 
-        Maglev::Relationships::Support.attach_model_dsl(model_value, klass, _collection_path, _member_path)
+        Maglev::Relationships::Support.attach_model_dsl(model_value, klass, _collection_path, _member_path, options, self)
 
         model_value
       end
