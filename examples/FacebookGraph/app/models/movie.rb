@@ -1,5 +1,5 @@
 class Movie < Maglev::Model
-  collection_path "/me/movies", json_path: "data"
+  collection_path ""
   member_path "/:id"
 
   remote_attributes :name, :id

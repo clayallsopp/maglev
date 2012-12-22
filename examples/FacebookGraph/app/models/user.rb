@@ -3,8 +3,12 @@ class User < Maglev::Model
 
   has_many :friends,
     class_name: "User",
-    collection_path: "/me/friends",
+    collection_path: "/:id/friends",
     member_path: "/:id",
+    json_path: "data"
+
+  has_many :movies,
+    collection_path: "/:id/movies",
     json_path: "data"
 
   has_one :wall,

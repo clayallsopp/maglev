@@ -11,9 +11,12 @@ class MoviesController < UITableViewController
 
     self.navigationItem.leftBarButtonItem = UIBarButtonItem.alloc.initWithTitle("Logout", style: UIBarButtonItemStyleBordered, target:self, action:'logout')
 
+    self.navigationItem.rightBarButtonItem = UIBarButtonItem.alloc.initWithTitle("Friends", style: UIBarButtonItemStyleBordered, target:self, action:'friends')
+
+
     @movies = []
 
-    Movie.find_all do |movies|
+    User.new(id: "me").movies.remote_find_all do |movies|
       @movies = movies
       @activity.stopAnimating
       @activity.removeFromSuperview
@@ -24,6 +27,10 @@ class MoviesController < UITableViewController
   def logout
     App.delegate.facebook.logout
     App.delegate.open_login
+  end
+
+  def friends
+    self.navigationController.pushViewController(FriendsController.alloc.initWithNibName(nil, bundle:nil), animated: true)
   end
 
   def tableView(tableView, numberOfRowsInSection:section)
@@ -55,6 +62,7 @@ class MoviesController < UITableViewController
     tableView.deselectRowAtIndexPath(indexPath, animated:true)
 
     movie = @movies[indexPath.row]
-    self.navigationController.pushViewController(MovieController.alloc.initWithId(movie.id), animated: true)
+    controller = MovieController.alloc.initWithId(movie.id)
+    self.navigationController.pushViewController(controller, animated: true)
   end
 end
