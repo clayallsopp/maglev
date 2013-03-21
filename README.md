@@ -73,6 +73,38 @@ What about `/users.json`? It returns a structure like this:
 
 `User.find_all do |users|` works out of the box.
 
+
+### Nested Collections
+
+It is possible to do nested collection paths this way:
+
+```ruby
+class Event < Maglev::Model
+  remote_attributes :id, :name
+
+  has_many :photos,
+    collection_path: "/events/:id/photos",
+    member_path: "/events/:event_id/photos/:id"
+
+  def event_id
+    self.id
+  end
+end
+
+class Photo < Maglev::Model
+  remote_attributes :id, :event_id, :url
+  belongs_to :event
+end
+
+event = Event.new(...)
+
+event.photos.find_all do |photos|
+end
+
+event.photos.find(13) do |photo|
+end
+```
+
 ### Handeling Irregular Structure
 
 Most JSON APIs return keys that don't always correspond to resource names. Maglev handles these flawlessly with the `json_path` property on most resources:
