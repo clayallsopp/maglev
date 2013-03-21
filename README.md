@@ -128,3 +128,7 @@ bidirectional = Maglev::Suport::Transformer.to(NSString) do |value, reversed_val
   end
 end
 ```
+
+### Examples
+
+Please check the [examples](tree/master/examples)
