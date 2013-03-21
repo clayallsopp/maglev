@@ -131,4 +131,4 @@ end
 
 ### Examples
 
-Please check the [examples](tree/master/examples)
+Please check the [examples](../../tree/master/examples)
