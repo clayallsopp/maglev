@@ -1,18 +1,21 @@
+PATH
+  remote: .
+  specs:
+    maglev (0.0.1)
+      bubble-wrap
+      motion_support
+
 GEM
   remote: https://rubygems.org/
   specs:
-    bubble-wrap (1.1.4)
-    formotion (1.1.5)
-      bubble-wrap (>= 1.1.4)
+    bubble-wrap (1.3.0)
     motion_support (0.0.6)
       bubble-wrap
-    routable (0.0.3)
+    rake (10.0.4)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  bubble-wrap
-  formotion
-  motion_support
-  routable
+  maglev!
+  rake
