@@ -2,17 +2,10 @@ require "maglev/version"
 require 'bubble-wrap/core'
 require 'bubble-wrap/http'
 require 'motion_support/all'
+require "motion-require"
 
-BW.require File.expand_path('../maglev/**/*.rb', __FILE__) do
+Motion::Require.all(Dir.glob(File.expand_path('../maglev/**/*.rb', __FILE__)))
 
-  ["http", "options"].each do |f|
-    file("lib/maglev/api.rb").depends_on file("lib/maglev/api/#{f}.rb")
-  end
-
-  ["attributes", "hashable", "relationships", "urls", "record"].each do |f|
-    file("lib/maglev/model/#{f}.rb").depends_on file("lib/maglev/support.rb")
-    file("lib/maglev/model.rb").depends_on file("lib/maglev/model/#{f}.rb")
-  end
-
-  file("lib/maglev/model.rb").depends_on file("lib/maglev/api.rb")
+Motion::Project::App.setup do |app|
+  app.detect_dependencies = false
 end

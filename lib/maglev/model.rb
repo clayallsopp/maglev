@@ -1,3 +1,11 @@
+motion_require 'model/attributes'
+motion_require 'model/hashable'
+motion_require 'model/record'
+motion_require 'model/relationships'
+motion_require 'model/urls'
+motion_require 'maglev'
+motion_require 'api.rb'
+
 module Maglev
   class Model
     class << self

@@ -1,3 +1,6 @@
+motion_require 'api/http'
+motion_require 'api/options'
+
 module Maglev
   class API
     class << self

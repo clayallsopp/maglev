@@ -2,13 +2,15 @@ PATH
   remote: .
   specs:
     maglev (0.0.1)
-      bubble-wrap
+      bubble-wrap (~> 1.3.0)
+      motion-require (~> 0.0.6)
       motion_support
 
 GEM
   remote: https://rubygems.org/
   specs:
     bubble-wrap (1.3.0)
+    motion-require (0.0.6)
     motion_support (0.0.6)
       bubble-wrap
     rake (10.0.4)
