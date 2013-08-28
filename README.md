@@ -54,7 +54,7 @@ And grab all of our objects with nifty methods:
 
 ```
 User.find(1) do |user|
-  p users.posts.first.body
+  p user.posts.first.body
   # => Maglev is super neat
 end
 ```
