@@ -1,4 +1,6 @@
-# Maglev
+# DEPRECATED - please use [motion-resource](https://github.com/tkadauke/motion-resource)
+
+## Maglev
 
 Faster, smoother iOS development. Pushing RubyMotion as hard as we can.
 
